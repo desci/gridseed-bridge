@@ -1,1 +1,9 @@
 C:\Users\myke\Documents\GitHub\gridseed-bridge\GridseedBridge\GridseedBridge\bin\Debug\GridseedBridge.exe.config
+C:\Users\myke\Documents\GitHub\gridseed-bridge\GridseedBridge\GridseedBridge\bin\Debug\GridseedBridge.exe
+C:\Users\myke\Documents\GitHub\gridseed-bridge\GridseedBridge\GridseedBridge\bin\Debug\GridseedBridge.pdb
+C:\Users\myke\Documents\GitHub\gridseed-bridge\GridseedBridge\GridseedBridge\obj\Debug\GridseedBridge.csprojResolveAssemblyReference.cache
+C:\Users\myke\Documents\GitHub\gridseed-bridge\GridseedBridge\GridseedBridge\obj\Debug\GridseedBridge.Form1.resources
+C:\Users\myke\Documents\GitHub\gridseed-bridge\GridseedBridge\GridseedBridge\obj\Debug\GridseedBridge.Properties.Resources.resources
+C:\Users\myke\Documents\GitHub\gridseed-bridge\GridseedBridge\GridseedBridge\obj\Debug\GridseedBridge.csproj.GenerateResource.Cache
+C:\Users\myke\Documents\GitHub\gridseed-bridge\GridseedBridge\GridseedBridge\obj\Debug\GridseedBridge.exe
+C:\Users\myke\Documents\GitHub\gridseed-bridge\GridseedBridge\GridseedBridge\obj\Debug\GridseedBridge.pdb

@@ -450,8 +450,11 @@ namespace GridseedBridge
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Processing = true;
-            RequestInfo(textBox1.Text);
+            if (!BackgroundSocket.IsBusy)
+            {
+                Processing = true;
+                RequestInfo(textBox1.Text);
+            }
         }
 
         private static class ClientInformation
@@ -461,65 +464,50 @@ namespace GridseedBridge
             public static string Query { get; set; }
         }
 
+        public string Size(int bytes)
+        {
+            string v;
+
+            if (bytes > 1073741824)
+                v = (bytes / 1073741824).ToString() + " GB";
+            else if (bytes > 1048576 & bytes < 1073741824)
+                v = (bytes / 1048576).ToString() + " MB";
+            else if (bytes > 1024 & bytes < 1048576)
+                v = (bytes / 1024).ToString() + " KB";
+            else
+                v = bytes.ToString() + " Bytes";
+
+            return v;
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (BackgroundSocket.IsBusy)
-            {
-                if(button1.Enabled == true)
-                    button1.Enabled = false;
-            }
-            else
-            {
-                if (button1.Enabled == false)
-                    button1.Enabled = true;
-            }
-
             if (BytesSent_Cache != BytesSent)
             {
                 BytesSent_Cache = BytesSent;
 
-                if (BytesSent > 1024000)
-                    label1.Text = "Lan out: " + (BytesSent / 1024000).ToString() + " MB";
-                else if (BytesSent > 1024)
-                    label1.Text = "Lan out: " + (BytesSent / 1024).ToString() + " KB";
-                else
-                    label1.Text = "Lan out: " + BytesSent.ToString() + " Bytes";
+                label1.Text = "Lan out: " + Size(BytesSent);
             }
 
             if (BytesReceived_Cache != BytesReceived)
             {
                 BytesReceived_Cache = BytesReceived;
 
-                if (BytesReceived > 1024000)
-                    label2.Text = "Lan in: " + (BytesReceived / 1024000).ToString() + " MB";
-                else if (BytesReceived > 1024)
-                    label2.Text = "Lan in: " + (BytesReceived / 1024).ToString() + " KB";
-                else
-                    label2.Text = "Lan in: " + BytesReceived.ToString() + " Bytes";
+                label2.Text = "Lan in: " + Size(BytesReceived);
             }
 
             if (WebBytesSent_Cache != WebBytesSent)
             {
                 WebBytesSent_Cache = WebBytesSent;
 
-                if (WebBytesSent > 1024000)
-                    label3.Text = (WebBytesSent / 1024000).ToString() + " MB :Web Out";
-                else if (WebBytesSent > 1024)
-                    label3.Text = (WebBytesSent / 1024).ToString() + " KB :Web Out";
-                else
-                    label3.Text = WebBytesSent.ToString() + " Bytes :Web Out";
+                label3.Text = Size(WebBytesSent) + " :Web Out";
             }
 
             if (WebBytesReceived_Cache != WebBytesReceived)
             {
                 WebBytesReceived_Cache = WebBytesReceived;
 
-                if (WebBytesReceived > 1024000)
-                    label4.Text = (WebBytesReceived / 1024000).ToString() + " MB :Web In";
-                else if (WebBytesReceived > 1024)
-                    label4.Text = (WebBytesReceived / 1024).ToString() + " KB :Web In";
-                else
-                    label4.Text = WebBytesReceived.ToString() + " Bytes :Web In";
+                label4.Text = Size(WebBytesReceived) + " :Web In";
             }
         }
 
