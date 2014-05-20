@@ -7,3 +7,4 @@ C:\Users\myke\Documents\GitHub\gridseed-bridge\GridseedBridge\GridseedBridge\obj
 C:\Users\myke\Documents\GitHub\gridseed-bridge\GridseedBridge\GridseedBridge\obj\Debug\GridseedBridge.csproj.GenerateResource.Cache
 C:\Users\myke\Documents\GitHub\gridseed-bridge\GridseedBridge\GridseedBridge\obj\Debug\GridseedBridge.exe
 C:\Users\myke\Documents\GitHub\gridseed-bridge\GridseedBridge\GridseedBridge\obj\Debug\GridseedBridge.pdb
+C:\Users\myke\Documents\GitHub\gridseed-bridge\GridseedBridge\GridseedBridge\obj\Debug\GridseedBridge.Form2.resources

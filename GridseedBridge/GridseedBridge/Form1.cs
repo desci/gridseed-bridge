@@ -34,11 +34,15 @@ namespace GridseedBridge
         public static int WebBytesReceived = 0;
         public static int WebBytesReceived_Cache = 0;
 
+        //timers
+        private static System.Windows.Forms.Timer Timer1 = new System.Windows.Forms.Timer();
+        private static System.Windows.Forms.Timer Timer2 = new System.Windows.Forms.Timer();
 
         //Edit from the config file
-        private static bool logging = true;
-        private static int API_Port = 4001;
-        private static IPAddress API_IP = IPAddress.Parse("192.168.0.110");
+        public static bool logging = true;
+        public static int API_Port = 4001;
+        public static IPAddress API_IP = IPAddress.Parse("192.168.0.110");
+        public static string Website_URI = "none";
         //endconfig
 
         private NotifyIcon trayIcon;
@@ -53,9 +57,17 @@ namespace GridseedBridge
             SysTray();
             this.Icon = new Icon(GridseedBridge.Properties.Resources.snake, 48, 48);
 
+            Timer1.Enabled = false;
+            Timer1.Interval = 1;
+            Timer1.Tick += new EventHandler(timer1_Tick);
+
+            Timer2.Enabled = false;
+            Timer2.Interval = 100;
+            Timer2.Tick += new EventHandler(timer2_Tick);
+
             if (!File.Exists("config.cfg"))
             {
-                using (StreamWriter sw = File.AppendText("config.cfg"))
+                /*using (StreamWriter sw = File.AppendText("config.cfg"))
                 {
                     sw.WriteLine("#Address of the pi on the LAN");
                     sw.WriteLine("pi=0.0.0.0");
@@ -65,9 +77,15 @@ namespace GridseedBridge
                     sw.WriteLine("");
                     sw.WriteLine("#Logs restart attempts, error codes, etc to logs.txt");
                     sw.WriteLine("logging=true");
+                    sw.WriteLine("");
+                    sw.WriteLine("#script web address (example: http://www.mywebsite.com/incoming.php");
+                    sw.WriteLine("address=none");
 
                     sw.Close();
-                }
+                }*/
+                Form form2 = new Form2();
+
+                form2.Show();
             }
             else
             {
@@ -91,10 +109,32 @@ namespace GridseedBridge
                         {
                             logging = Convert.ToBoolean(tmp[1]);
                         }
+                        else if (line.Contains("address="))
+                        {
+                            if (string.IsNullOrEmpty(tmp[1]) | tmp[1] == "none")
+                            {
+                                timer1.Enabled = false;
+                                timer2.Enabled = false;
+
+                                Form form2 = new Form2();
+
+                                form2.Show();
+                            }
+                            else
+                                Website_URI = tmp[1];
+                        }
                     }
                 }
-            }
 
+                Timer1.Enabled = true;
+                Timer2.Enabled = true;
+            }
+        }
+
+        public static void FinishedConfig()
+        {
+            Timer1.Enabled = true;
+            Timer2.Enabled = true;
         }
 
         private void SysTray()
@@ -279,11 +319,11 @@ namespace GridseedBridge
                 try
                 {
                     if (ClientInformation.Query == "summary")
-                        resp = wc.DownloadString("http://www.website_here.com/?Action=True&Args=" + UploadString + "&INPUT=sum");
+                        resp = wc.DownloadString(Website_URI + "?Action=True&Args=" + UploadString + "&INPUT=sum");
                     else if (ClientInformation.Query == "devs")
-                        resp = wc.DownloadString("http://www.website_here.com/?Action=True&Args=" + UploadString + "&INPUT=ind");
+                        resp = wc.DownloadString(Website_URI + "?Action=True&Args=" + UploadString + "&INPUT=ind");
                     else if (ClientInformation.Query == "pools")
-                        resp = wc.DownloadString("http://www.website_here.com/?Action=True&Args=" + UploadString + "&INPUT=pool");
+                        resp = wc.DownloadString(Website_URI + "?Action=True&Args=" + UploadString + "&INPUT=pool");
                 } catch { }
 
                 WebBytesReceived_Cache = WebBytesReceived; WebBytesReceived += Encoding.Default.GetBytes(resp).Length;
