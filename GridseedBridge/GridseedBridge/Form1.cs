@@ -67,22 +67,6 @@ namespace GridseedBridge
 
             if (!File.Exists("config.cfg"))
             {
-                /*using (StreamWriter sw = File.AppendText("config.cfg"))
-                {
-                    sw.WriteLine("#Address of the pi on the LAN");
-                    sw.WriteLine("pi=0.0.0.0");
-                    sw.WriteLine("");
-                    sw.WriteLine("#API port on the PI");
-                    sw.WriteLine("port=4001");
-                    sw.WriteLine("");
-                    sw.WriteLine("#Logs restart attempts, error codes, etc to logs.txt");
-                    sw.WriteLine("logging=true");
-                    sw.WriteLine("");
-                    sw.WriteLine("#script web address (example: http://www.mywebsite.com/incoming.php");
-                    sw.WriteLine("address=none");
-
-                    sw.Close();
-                }*/
                 Form form2 = new Form2();
 
                 form2.Show();
@@ -186,10 +170,7 @@ namespace GridseedBridge
 
             using (StreamWriter sw = File.AppendText(@"log.txt"))
             {
-                sw.WriteLine(DateTime.Now + " :: <Code " + code + "> {");
-                sw.WriteLine(msg);
-                sw.WriteLine("}");
-                sw.WriteLine("");
+                sw.WriteLine(DateTime.Now + " :: <Code " + code + "> :: " + msg);
 
                 sw.Close();
             }
